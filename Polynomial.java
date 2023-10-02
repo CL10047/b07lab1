@@ -31,13 +31,16 @@ public class Polynomial {
 	        this.exponents = new int[terms.length];
 	        int indexOfVariable;
 
-	        this.coefficients[0] = Double.parseDouble(terms[0]);
-	        this.exponents[0] = 0;
-
-	        for (int i = 1; i < terms.length; i++) {
+	        for (int i = 0; i < terms.length; i++) {
 	        	indexOfVariable = terms[i].indexOf("x");
-	        	this.coefficients[i] = Double.parseDouble(terms[i].substring(0, indexOfVariable));
-	        	this.exponents[i] = Integer.parseInt(terms[i].substring(indexOfVariable + 1));
+
+	        	if (indexOfVariable != -1) {
+	        		this.coefficients[i] = Double.parseDouble(terms[i].substring(0, indexOfVariable));
+		        	this.exponents[i] = Integer.parseInt(terms[i].substring(indexOfVariable + 1));
+	        	} else {
+		        	this.coefficients[i] = Double.parseDouble(terms[i]); 
+	       			this.exponents[i] = 0;
+	        	}
 	        }
         } catch (IOException e) {
             e.printStackTrace();
@@ -47,10 +50,13 @@ public class Polynomial {
 	public void saveToFile(String filename) {
 		try(PrintStream writer = new PrintStream(filename)) {
 			for(int i = 0; i < this.exponents.length; i++) {
-				if (i == 0) {
+				if (exponents[i] == 0) {
+					if (this.coefficients[i] > 0) {
+						writer.print("+");
+					}
 					writer.print(this.coefficients[i]);
 				} else {
-					if (this.coefficients[i] > 0) {
+					if (this.coefficients[i] > 0 && i != 0) {
 						writer.print("+");
 					}
 
