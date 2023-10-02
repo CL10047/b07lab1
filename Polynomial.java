@@ -42,6 +42,8 @@ public class Polynomial {
 	       			this.exponents[i] = 0;
 	        	}
 	        }
+
+	        reader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -65,6 +67,8 @@ public class Polynomial {
 					writer.print(exponents[i]);
 				}
 			}
+
+			writer.close();
 		} catch (IOException e) {
             e.printStackTrace();
         }
